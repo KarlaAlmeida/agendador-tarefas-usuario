@@ -1,6 +1,5 @@
 package com.javanauta.agendador_tarefas_usuario.infraestructure.security;
 
-
 import com.javanauta.agendador_tarefas_usuario.infraestructure.entity.Usuario;
 import com.javanauta.agendador_tarefas_usuario.infraestructure.repository.UsuarioRepository;
 import org.springframework.security.core.userdetails.UserDetails;

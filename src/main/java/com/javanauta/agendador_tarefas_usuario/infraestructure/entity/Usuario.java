@@ -2,7 +2,10 @@ package com.javanauta.agendador_tarefas_usuario.infraestructure.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.List;
 
 @Getter
@@ -12,7 +15,7 @@ import java.util.List;
 @Entity
 @Table(name = "usuario")
 @Builder
-public class Usuario {
+public class Usuario implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,4 +33,18 @@ public class Usuario {
     @JoinColumn(name = "usuario_id", referencedColumnName = "id")
     private List<Telefone> telefones;
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of();
+    }
+
+    @Override
+    public String getPassword() {
+        return senha;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
 }

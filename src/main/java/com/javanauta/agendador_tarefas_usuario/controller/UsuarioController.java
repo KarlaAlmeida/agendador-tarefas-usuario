@@ -1,9 +1,11 @@
 package com.javanauta.agendador_tarefas_usuario.controller;
 
 import com.javanauta.agendador_tarefas_usuario.business.UsuarioService;
+import com.javanauta.agendador_tarefas_usuario.business.ViaCepService;
 import com.javanauta.agendador_tarefas_usuario.business.dto.EnderecoDTO;
 import com.javanauta.agendador_tarefas_usuario.business.dto.TelefoneDTO;
 import com.javanauta.agendador_tarefas_usuario.business.dto.UsuarioDTO;
+import com.javanauta.agendador_tarefas_usuario.infraestructure.client.ViaCepDTO;
 import com.javanauta.agendador_tarefas_usuario.infraestructure.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,7 @@ public class UsuarioController {
     private final UsuarioService usuarioService;
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
+    private final ViaCepService viaCepService;
 
     @PostMapping
     public ResponseEntity<UsuarioDTO> salvaUsuario(@RequestBody UsuarioDTO usuarioDTO){
@@ -73,6 +76,11 @@ public class UsuarioController {
     public ResponseEntity<TelefoneDTO> cadastroTelefone(@RequestBody TelefoneDTO telefoneDTO,
                                                         @RequestHeader("Authorization") String token){
         return ResponseEntity.ok(usuarioService.cadastroTelefone(token, telefoneDTO));
+    }
+
+    @GetMapping("/endereco/{cep}")
+    public ResponseEntity<ViaCepDTO> buscarDadosCep(@PathVariable("cep") String cep){
+        return ResponseEntity.ok(viaCepService.buscarDadosEndereco(cep));
     }
 
 }

@@ -38,12 +38,14 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         JwtRequestFilter jwtRequestFilter = new JwtRequestFilter(jwtUtil, userDetailsService);
 
+        //.requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.GET, "/auth").permitAll()
+                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                         .requestMatchers(HttpMethod.POST, "/usuario").permitAll()
                         .requestMatchers(HttpMethod.POST, "/usuario/login").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/usuario/endereco/**").permitAll()
                         .requestMatchers("/usuario/**").authenticated()
                         .anyRequest().authenticated()
                 )
